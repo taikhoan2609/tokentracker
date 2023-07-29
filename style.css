@@ -1,0 +1,171 @@
+html {
+  font-family: "Poppins";
+  font-weight: 300;
+  font-size: 15px;
+  box-sizing: border-box;
+  height: 200vh;
+  padding-left: 200px;
+  /* overflow: hidden; */
+}
+
+:root {
+  --primary-color: green;
+  --secondary-color: lime;
+}
+
+#sidebar {
+  background-color: rgb(31, 105, 31);
+  /* height: 100vh; */
+  width: 200px;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.sidebar-alter {
+  width: 200px;
+}
+
+#sidebar ul li {
+  padding: 1rem;
+  padding-left: 2rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #fff;
+}
+
+.img {
+  display: inline-block;
+  background-image: url("./IMG_8670.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 20%;
+  border: 3px solid greenyellow;
+  box-shadow: 5px 5px 5px 1px rgba(128, 128, 128, 0.267);
+}
+
+#portfolio {
+  margin-top: 15px;
+
+  width: 80%;
+}
+
+.header {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: gray;
+}
+
+.item {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Add Token */
+
+#add-token,
+#edit-order {
+  width: 350px;
+  margin-left: 100px;
+}
+
+header {
+  margin-top: 50px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+#add-token li,
+#edit-order li {
+  width: 250px;
+  margin: 25px 0px;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+select {
+  border-radius: 5px;
+  text-align: center;
+  width: 100px;
+  height: 30px;
+  border: 1px solid gray;
+}
+
+input {
+  text-align: center;
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  border: 1px solid gray;
+}
+
+/* History */
+#history {
+  width: 70%;
+  /* margin-right: 50px; */
+}
+
+#search-bar {
+  position: relative;
+}
+
+#search-result ul {
+  position: absolute;
+  right: -120%;
+  top: 0%;
+  list-style: none;
+  width: 100px !important;
+  padding: 0;
+  text-align: center;
+}
+
+#search-result ul li {
+  display: inline-block;
+  width: 100px !important;
+  margin: 0px 0px 10px 0px !important;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: beige;
+}
+
+#search-result ul li:hover {
+  background-color: bisque;
+  cursor: pointer;
+}
+
+.thumb {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 100px;
+  background-size: cover;
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+/* Buy or Sell display */
+
+.buy {
+  color: rgb(10, 184, 10);
+}
+.sell {
+  color: rgb(172, 22, 22);
+}
+
+.hidden {
+  display: none;
+}
+
+#portfolio-table {
+  font-size: 1rem;
+  font-weight: 500;
+}
