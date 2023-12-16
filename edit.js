@@ -13,6 +13,7 @@ const cancelBtn = document.querySelector("#cancel-btn");
 const editBtn = document.querySelector("#edit-btn");
 const deletelBtn = document.querySelector("#delete-btn");
 const myForm = document.querySelector("#myform");
+const volumeLabel = document.querySelector(".volume-label");
 
 // User choose the token and render table
 const option = document.createElement("option");
@@ -27,11 +28,28 @@ historyArr.forEach((item) => {
 });
 
 // Create function to render table
+let totalVolume;
+let currentTokenAmount;
+let quickInput;
 function renderHistory(tokenName) {
   historyTable.innerHTML = "";
   const filterArr = historyArr.filter(
     (item) => item.symbol == tokenInput.value
   );
+
+  // Thêm mục hiển thị current token amount
+  const totalAmount = filterArr.reduce((acc, cur) => acc + cur.amount, 0);
+  currentTokenAmount = totalAmount;
+  document.querySelector(
+    ".total-token"
+  ).innerHTML = `Current amount: ${totalAmount.toFixed(3)} ${tokenName}`;
+
+  // Tính tổng volume đã ape in của 1 token
+  const totalVol = filterArr.reduce((acc, cur) => acc + cur.volume, 0);
+  console.log(totalVol);
+  totalVolume = totalVol;
+
+  console.log(filterArr);
   filterArr.forEach((item) => {
     const div = document.createElement("div");
     div.classList.add("row", "item", "align-items-center");
@@ -67,6 +85,28 @@ function renderHistory(tokenName) {
     volumeColor();
   });
 }
+
+// Tùy biến theo lệnh Sell
+orderInput.addEventListener("change", () => {
+  console.log(orderInput.value);
+  if (orderInput.value === "Sell") {
+    console.log(orderInput.value === "Sell");
+    document.querySelector(".quick-input").removeAttribute("hidden");
+    volumeLabel.innerHTML = "Token Amount:";
+  } else {
+    document.querySelector(".quick-input").setAttribute("hidden", "");
+    volumeLabel.innerHTML = "USD Volume:";
+  }
+});
+
+document.querySelector(".sell50").addEventListener("click", () => {
+  quickInput = currentTokenAmount / 2;
+  volInput.value = `${currentTokenAmount / 2}`;
+});
+document.querySelector(".sell100").addEventListener("click", () => {
+  quickInput = currentTokenAmount;
+  volInput.value = `${currentTokenAmount}`;
+});
 
 // Render table when selecting token
 tokenInput.addEventListener("change", function () {
@@ -125,30 +165,38 @@ addBtn.addEventListener("click", function () {
     priceInput.value.length == 0 ||
     volInput.value.length == 0
   ) {
-    alert("Please fill all the empty blank");
-  } else {
-    const index = historyArr.findLastIndex(
-      (item) => item.symbol == tokenInput.value
-    );
-    const newOrder = { ...historyArr[index] };
-    const d = new Date();
-    newOrder.date = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`;
-    newOrder.order = orderInput.value == "Buy" ? true : false;
-    newOrder.count++;
-    newOrder.price = Number(priceInput.value);
-    newOrder.volume = newOrder.order
-      ? Number(volInput.value)
-      : Number(volInput.value) * -1;
-    newOrder.amount = function () {
-      return Number((this.amount = this.volume / this.price));
-    };
-    newOrder.amount();
-    historyArr.push(newOrder);
-    renderHistory(newOrder.symbol);
-    orderColor();
-    document.querySelector("form").reset();
-    saveToStorage("historyArr", historyArr);
+    return alert("Please fill all the empty blank");
   }
+
+  if (orderInput.value == "Sell" && volInput > currentTokenAmount) {
+    return alert("Số lượng token bán vượt số lượng bạn đang có");
+  }
+  // Buy order
+  const index = historyArr.findLastIndex(
+    (item) => item.symbol == tokenInput.value
+  );
+  const newOrder = { ...historyArr[index] };
+  const d = new Date();
+  newOrder.date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+  newOrder.order = orderInput.value == "Buy" ? true : false;
+  newOrder.count++;
+  newOrder.price = Number(priceInput.value);
+  newOrder.volume = newOrder.order
+    ? Number(volInput.value)
+    : Number(volInput.value) * Number(priceInput.value) * -1;
+  // newOrder.amount = function () {
+  //   return Number((this.amount = this.volume / this.price));
+  // };
+  newOrder.amount =
+    orderInput.value == "Buy"
+      ? Number((this.amount = this.volume / this.price))
+      : Number(volInput.value * -1);
+
+  historyArr.push(newOrder);
+  renderHistory(newOrder.symbol);
+  orderColor();
+  document.querySelector("form").reset();
+  saveToStorage("historyArr", historyArr);
 });
 
 // EDIT ORDER (use onclick)
@@ -196,11 +244,12 @@ saveBtn.addEventListener("click", function () {
     tokenEdited.volume =
       tokenEdited.order == true
         ? Number(volInput.value)
-        : Number(volInput.value) * -1;
-    tokenEdited.amount = function () {
-      return (this.amount = this.volume / this.price);
-    };
-    tokenEdited.amount();
+        : Number(volInput.value) * Number(priceInput.value) * -1;
+    tokenEdited.amount =
+      orderInput.value == "Buy"
+        ? Number((this.amount = this.volume / this.price))
+        : Number(volInput.value * -1);
+
     historyArr[placeholder] = { ...tokenEdited };
     renderHistory(historyArr[placeholder].symbol);
     amountColor();
@@ -255,3 +304,6 @@ const deleteOrder = function (orderCount, orderId, orderSymbol) {
   }
   saveToStorage("historyArr", historyArr);
 };
+
+const e = new Date();
+console.log(e.getDate(), e.getMonth(), e.getFullYear());

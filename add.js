@@ -87,7 +87,7 @@ saveBtn.addEventListener("click", function () {
   //  shallow copy object
   const newToken = { ...tokenAdded };
   const d = new Date();
-  newToken.date = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`;
+  newToken.date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
   newToken.count = 1;
   newToken.price = priceInput.value;
   newToken.order = true;

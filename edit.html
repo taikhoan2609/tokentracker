@@ -60,16 +60,29 @@
                 />
               </li>
               <li class="d-flex justify-content-between">
-                <label for="volume">Volume: </label>
-                <input
-                  type="text"
-                  name="volume"
-                  id="select-volume"
-                  placeholder="$$$$"
-                />
+                <label for="volume" class="volume-label">USD Volume: </label>
+                <div>
+                  <input
+                    min="0"
+                    type="number"
+                    name="volume"
+                    id="select-volume"
+                    placeholder="$$$$"
+                  />
+                  <div class="quick-input" hidden>
+                    <button type="button" class="quick-amount-input sell50">
+                      50%
+                    </button>
+                    <button type="button" class="quick-amount-input sell100">
+                      100%
+                    </button>
+                  </div>
+                </div>
               </li>
             </form>
           </div>
+
+          <div style="font-weight: 500" class="total-token"></div>
 
           <div class="button">
             <button id="add-btn" class="btn btn-primary">Add order</button>
