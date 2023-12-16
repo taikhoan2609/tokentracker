@@ -71,7 +71,7 @@ dataFetch().then((priceArr) => {
   );
   document.querySelector(
     "#total-vol"
-  ).innerHTML = `Total Capital: $${totalVol}`;
+  ).innerHTML = `Total Capital: $${totalVol.toFixed(2)}`;
 
   const portTable = document.querySelector("#portfolio-table");
   // Convert 1 array of many objects into 1 object
