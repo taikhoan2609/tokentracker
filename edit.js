@@ -189,9 +189,9 @@ addBtn.addEventListener("click", function () {
   // };
   newOrder.amount =
     orderInput.value == "Buy"
-      ? Number((this.amount = this.volume / this.price))
+      ? Number(newOrder.volume / newOrder.price)
       : Number(volInput.value * -1);
-
+  console.log(newOrder.amount);
   historyArr.push(newOrder);
   renderHistory(newOrder.symbol);
   orderColor();
@@ -247,7 +247,7 @@ saveBtn.addEventListener("click", function () {
         : Number(volInput.value) * Number(priceInput.value) * -1;
     tokenEdited.amount =
       orderInput.value == "Buy"
-        ? Number((this.amount = this.volume / this.price))
+        ? Number(tokenEdited.volume / tokenEdited.price)
         : Number(volInput.value * -1);
 
     historyArr[placeholder] = { ...tokenEdited };
