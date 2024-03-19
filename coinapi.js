@@ -150,7 +150,7 @@ dataFetch().then((priceArr) => {
           "each-token"
         );
         div.innerHTML = `
-        <div class="col">${index}</div>
+        <div class="col">${index+1}</div>
         <div class="col-2"><img
         class="thumb"
         src=${item.thumb}
